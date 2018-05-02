@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>INPE Relatórios</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css">
+
+
+    <link rel="stylesheet" href="bulma/bulma.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        .invisivel {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Cadastro de Atividades</h1>
+                <hr>    
+                <form action="/newRelatorio" method="POST">
+                    <div class="field">
+                        <label class="label">Atividade</label>
+                        <p class="control">
+                            <input id="atividade" name="atividade" class="input" placeholder="Text input" type="text">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <p class="control">
+                            <input id="descricao" name="descricao" class="input" placeholder="Text input" type="text">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora de Início</label>
+                        <p class="control horaInicio">
+                            <input id="horaInicio" name="horaInicio" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaInicial(this.value)" type="time">
+                            <div class="invisivel mensagem notification is-danger"></div>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora do Término</label>
+                        <p class="control horaFim">
+                            <input id="horaFim" name="horaFim" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaFim(this.value)" type="time">
+                            
+                        </p>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Orientação ao Estagiário</label>
+                        <p class="control">
+                            <label class="radio">
+                                <input type="radio" name="orientaEstagiario" value="Sim">
+                                Sim
+                                </label>
+                                <label class="radio">
+                                <input type="radio" name="orientaEstagiario" value="Não">
+                                Não
+                            </label>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Nome do Estagiário</label>
+                        <p class="control">
+                            <input id="nomeEstagiario" name="nomeEstagiario" class="input" placeholder="Text input" type="text">
+                        </p>
+                    </div>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <button type="submit" class="button is-primary" onclick="validaCadastro()">Cadastrar Atividade</button>
+                        </p>
+                        <p class="control">
+                            <button class="button is-link" id="clear">Limpar Formulário</button>
+                        </p>
+                    <br>
+                </form>
+            </div>
+            <!-- Lista de Atividades -->
+            <div class="column">
+                <h1 class="title">Lista de Atividades</h1>
+                <hr>
+                <!--a class="button is-primary" onclick="retornaDataAtual()">Relatórios do Dia Atual</a>
+                <a class="button is-info">Relatórios do dia Anterior</a>
+                <a class="button is-warning">Listar todos os relatórios</a>
+                <a class="button is-danger">Apagar todos os relatórios</a>
+                <br /><br /-->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th><abbr title="Played">Atividade</abbr></th>
+                            <th><abbr title="Won">Descrição</abbr></th>
+                            <th><abbr title="Drawn">Dia</abbr></th>
+                            <th><abbr title="Lost">Hora de início</abbr></th>
+                            <th><abbr title="Goals for">Hora de término</abbr></th>
+                            <th><abbr title="Goals against">Orientação de estagiário</abbr></th>
+                            <th><abbr title="Goal difference">Nome do estagiário</abbr></th>
+                            <th><abbr title="Editar"></abbr></th>
+                            <th><abbr title="Apagar"></abbr></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if (data) { %>
+                            <%  for(var i=0; i < data.length; i++) {  %>
+                                <tr>
+                                    <td class="atividade"><%= data[i].atividade %></td>
+                                    <td class="descricao"><%= data[i].descricao %></td>
+                                    <td class="dia"><%= data[i].dia %></td>
+                                    <td class="horaInicio"><%= data[i].horaInicio %></td>
+                                    <td class="horaFim"><%= data[i].horaFim %></td>
+                                    <td class="orientaEstagiario"><%= data[i].orientaEstagiario %></td>
+                                    <td class="nomeEstagiario"><%= data[i].nomeEstagiario %></td>
+                                    <td>
+                                        <a href="/upRelatorio/<%= data[i]._id %>" class="button is-info is-active">
+                                            <i class="far fa-edit"></i>  
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/rmRelatorio/<%= data[i]._id %>" class="button is-danger  is-active">
+                                            <i class="fas fa-trash-alt"></i> 
+                                        </a>
+                                    </td>
+                                </tr>
+                            <% console.log(data) }; %>   
+                        <% }; %>   
+                </table>
+            </div>
+        </div>
+    </div>    
+    <script src="js/relatorios.js"></script>
+</body>
+</html>

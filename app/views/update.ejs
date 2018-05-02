@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INPE Relatórios</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.css">
+
+    <style>
+        .invisivel {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="columns">
+            <div class="column">
+                <h1 class="title">Atualizar Atividade</h1>
+                <hr>    
+                <br /><br />
+                <a class="button is-primary" href="/relatorios">Voltar para Relatórios</a>
+                <br /><br />
+                <form action="/updateRelatorio/<% data[0].id %>" method="POST">
+                    <div class="field">
+                        <label class="label">Atividade</label>
+                        <p class="control">
+                            <input id="atividade" name="atividade" class="input" placeholder="Text input" type="text" value="<%= data[0].atividade %>">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <p class="control">
+                            <input id="descricao" name="descricao" class="input" placeholder="Text input" type="text" value="<%= data[0].descricao %>">
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora de Início</label>
+                        <p class="control horaInicio">
+                            <input id="horaInicio" name="horaInicio" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaInicial(this.value)" type="time" value="<%= data[0].horaInicio %>">
+                            <div class="invisivel mensagem notification is-danger"></div>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Hora do Término</label>
+                        <p class="control horaFim">
+                            <input id="horaFim" name="horaFim" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaFim(this.value)" type="time" value="<%= data[0].horaFim %>">
+                            
+                        </p>
+                    </div>
+                    
+                    <div class="field">
+                        <label class="label">Orientação ao Estagiário</label>
+                        <p class="control">
+                            <label class="radio">
+                                <input type="radio" name="orientaEstagiario" value="Sim">
+                                Sim
+                                </label>
+                                <label class="radio">
+                                <input type="radio" name="orientaEstagiario" value="Não">
+                                Não
+                            </label>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Nome do Estagiário</label>
+                        <p class="control">
+                            <input id="nomeEstagiario" name="nomeEstagiario" class="input" placeholder="Text input" type="text" value="<%= data[0].nomeEstagiario %>">
+                        </p>
+                    </div>
+                    <div class="field is-grouped">
+                        <p class="control">
+                            <button type="submit" class="button is-primary">Salvar Atividade</button>
+                        </p>
+                        <p class="control">
+                            <button class="button is-link" id="clear">Limpar Formulário</button>
+                        </p>
+                    <br>
+                </form>
+            </div>
+        </div>
+    </div>    
+    <script>
+        const $ = document.querySelector.bind(document);
+
+        var campos = [
+            atividade = $('#atividade'),
+            descricao = $('#descricao'),
+            horaInicio = $('#horaInicio'),
+            horaFim = $('#horaFim'),
+            orientaEstagiario = $('#orientaEstagiario'),
+            nomeEstagiario = $('#nomeEstagiario')
+        ];
+
+        $('#clear').addEventListener('click', function(event){
+
+            event.preventDefault();
+
+            for (let i = 0; i < campos.length; i++) {
+                campos[i].value = '';
+            }
+
+            campos[0].focus();
+
+        });
+
+        function mascara_horaInicial(hora){ 
+            var myhora = ''; 
+            myhora = myhora + hora; 
+            if (myhora.length == 2){ 
+                myhora = myhora + ':'; 
+                document.forms[0].horaInicio.value = myhora; 
+            } 
+            if (myhora.length == 5){ 
+                verifica_horaInicio(); 
+            } 
+        } 
+
+        function verifica_horaInicio(){ 
+            hrs = (document.forms[0].horaInicio.value.substring(0,2)); 
+            min = (document.forms[0].horaInicio.value.substring(3,5)); 
+            
+            situacao = ""; 
+            // verifica data e hora 
+            if ((hrs < 00 ) || (hrs > 23) || ( min < 00) ||( min > 59)){ 
+                situacao = "falsa"; 
+            } 
+            
+            if (document.forms[0].horaInicio.value == "") { 
+                situacao = "falsa"; 
+            } 
+
+            if (situacao == "falsa") { 
+                let mensagem = "Hora inválida - clique aqui para corrigir"; 
+                let hora = $('.horaInicio');  
+                let input = $('#horaInicio');
+                
+                let div = document.createElement('div');
+                div.textContent = mensagem;
+                div.classList.add('mensagem');
+                div.classList.add('notification');
+                div.classList.add('is-danger');
+
+                hora.appendChild(div);
+
+                div.addEventListener('click', function(e) {
+                    div.classList.add("invisivel"); 
+                    input.value = "";
+                    input.focus();
+                });
+            } 
+        } 
+
+        function mascara_horaFim(hora){ 
+            var myhora = ''; 
+            myhora = myhora + hora; 
+            if (myhora.length == 2){ 
+                myhora = myhora + ':'; 
+                document.forms[0].horaFim.value = myhora; 
+            } 
+            if (myhora.length == 5){ 
+                verifica_horaFim(); 
+            } 
+        } 
+
+        function verifica_horaFim(){ 
+            hrs = (document.forms[0].horaFim.value.substring(0,2)); 
+            min = (document.forms[0].horaFim.value.substring(3,5)); 
+            
+            situacao = ""; 
+            // verifica data e hora 
+            if ((hrs < 00 ) || (hrs > 23) || ( min < 00) ||( min > 59)){ 
+                situacao = "falsa"; 
+            } 
+            
+            if (document.forms[0].horaFim.value == "") { 
+                situacao = "falsa"; 
+            } 
+
+            if (situacao == "falsa") { 
+                let mensagem = "Hora inválida - clique aqui para corrigir"; 
+                let hora = $('.horaFim');  
+                let input = $('#horaFim');
+                
+                let div = document.createElement('div');
+                div.textContent = mensagem;
+                div.classList.add('mensagem');
+                div.classList.add('notification');
+                div.classList.add('is-danger');
+
+                hora.appendChild(div);
+
+                div.addEventListener('click', function(e) {
+                    div.classList.add("invisivel"); 
+                    input.value = "";
+                    input.focus();
+                });
+            } 
+        } 
+    </script>
+</body>
+</html>

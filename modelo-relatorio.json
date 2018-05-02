@@ -1,0 +1,30 @@
+[
+    {
+        "id": "01",
+        "atividade": "Disponibilizar notícia",
+        "descricao": "Criação do código HTML, inserção da notícia no banco de dados através do WebSistemas, conferir a notícia nos portais Internet e Intranet, disponibilizar a notícia, responder o email, guardar o email",
+        "dia": "2018-04-25",
+        "horaInicio": "14:15",
+        "horaFim": "15:16",
+        "orientaEstagiario": true,
+        "nomeEstagiario": "Bruna Gonçalves"
+    },{
+        "id": "02",
+        "atividade": "Disponibilizar licitação",
+        "descricao": "Baixar a licitação do WebSistemas, conferir a licitação, subir a licitação por SSH no SSH Secure Shell, disponibilizar a licitação no WebSistemas, conferir a licitação, guardar o email",
+        "dia": "2018-04-25",
+        "horaInicio": "14:55",
+        "horaFim": "15:56",
+        "orientaEstagiario": true,
+        "nomeEstagiario": "Matheus de Souza"
+    },{
+        "id": "03",
+        "atividade": "Desenvolvimento de formulário",
+        "descricao": "Criar página HTML, criar campos para formulário na página HTML, criar validação JavaScript com JQuery Validator, criar campos do formulário no banco de dados Postgres, testar validações frontend e backend",
+        "dia": "2018-04-26",
+        "horaInicio": "19:40",
+        "horaFim": "15:08",
+        "orientaEstagiario": "Não",
+        "nomeEstagiario": ""
+    }
+]
