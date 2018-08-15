@@ -6,7 +6,7 @@ const relShema = new Schema(
         id: Number,
         atividade: String,
         descricao: String,
-        dia: String,
+        dia: Date,
         horaInicio: String,
         horaFim: String,
         orientaEstagiario: String,

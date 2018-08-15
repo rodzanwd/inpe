@@ -1,29 +1,23 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 
+const now = function(){
+    let moment = require('moment');
+    let nowDate = moment(new Date());
+    let date = nowDate.format("D MMM YYYY");
+
+}
+
+const dataAtual = Date.now()
+
 const db = require("../models/relatorio");
 const relatorio = db.Mongoose.model('relatorios', db.Relatorio, 'relatorios');
 
-function data() {
-    let data = new Date();   
-    let dia = data.getDate();
-    if (dia < 10) { 
-        dia = '0' + dia; 
-    }
-    let mes = data.getMonth();
-    mes++;
-    if (mes < 10) { 
-        mes = '0' + mes; 
-    }
-    let ano = data.getFullYear();
-    return data = dia + '/' + (mes) + '/' + ano; 
-}
-
 module.exports.getRelatorios = (req, res) => {    
+
     relatorio.find({}).lean().exec(
         function (e, data) {
-            res.render('index', { data: data});
-            console.log(data)
+            res.render('index', { data: data, moment: moment });
             res.end();
         }
     );
@@ -33,7 +27,7 @@ module.exports.getRelatorios = (req, res) => {
 module.exports.getRelatorioById = (req, res) => {
     relatorio.find({ _id: req.params.id }).lean().exec(
         function (e, data) {
-            console.log(data)
+            res.json(data);
             res.end();
         }
     );
@@ -44,7 +38,7 @@ module.exports.insertRelatorios = (req, res) => {
     let newRelatorio = new relatorio({
         atividade: req.body.atividade,
         descricao: req.body.descricao,
-        dia: data(),
+        dia: req.body.data,
         horaInicio: req.body.horaInicio,
         horaFim: req.body.horaFim,
         orientaEstagiario: req.body.orientaEstagiario,
@@ -59,9 +53,9 @@ module.exports.insertRelatorios = (req, res) => {
             return;
         }
         (data => {
-            console.log('Bem, inseriu a data', data);
+            console.log('Bem, inseriu a data');
+            console.log(data.dia);
         })
-        console.log('eita, ta bonito');
         res.redirect('/relatorios');
     });
 
@@ -78,12 +72,27 @@ module.exports.listUpRelatorio = (req, res) => {
 }
 
 module.exports.updateRelatorios = (req, res) => {
-    relatorio.findOneAndUpdate({ _id: req.params.id }, req.body, function (e, doc) {
-        if (e) {
-            console.log('hum... zoou né', e)
-        }
-        res.redirect('/relatorios');
+    let newRelatorio = new relatorio({
+        atividade: req.body.atividade,
+        descricao: req.body.descricao,
+        dia: req.body.dia,
+        horaInicio: req.body.horaInicio,
+        horaFim: req.body.horaFim,
+        orientaEstagiario: req.body.orientaEstagiario,
+        nomeEstagiario: req.body.nomeEstagiario
     });
+    relatorio.findOneAndUpdate(
+        { _id: req.params.id }, 
+        req.body, 
+        {upsert: true, new: true, runValidators: true}, 
+        function (e, doc) {
+            console.log(doc)
+            if (e) {
+                console.log('hum... zoou né', e)
+            }
+            res.redirect('/relatorios');
+        }
+    );
 }
 
 

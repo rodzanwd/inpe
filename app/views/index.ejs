@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <title>INPE Relatórios</title>
 
@@ -20,119 +20,161 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="columns">
-            <div class="column">
-                <h1 class="title">Cadastro de Atividades</h1>
-                <hr>    
-                <form action="/newRelatorio" method="POST">
-                    <div class="field">
-                        <label class="label">Atividade</label>
-                        <p class="control">
-                            <input id="atividade" name="atividade" class="input" placeholder="Text input" type="text">
-                        </p>
+    <header>
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <a href="/portal" title="Intranet INPE - Sistemas"><img style="padding-top:10px;" src="img/inpe_logo.png" alt="Intranet INPE - Sistema Portal"></a>
+                </div>
+                <div class="column baselogin">
+                        <div><a href="/portal/publico/sistemas/" title="Fechar"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a></div>
+                        <div style="padding-top:10px;float: right;">Olá <a>Rodrigo Alves Zandonadi</a>, bem vindo(a) ao Sistema Relatórios!</div>
                     </div>
-                    <div class="field">
-                        <label class="label">Descrição</label>
-                        <p class="control">
-                            <input id="descricao" name="descricao" class="input" placeholder="Text input" type="text">
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label">Hora de Início</label>
-                        <p class="control horaInicio">
-                            <input id="horaInicio" name="horaInicio" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaInicial(this.value)" type="time">
-                            <div class="invisivel mensagem notification is-danger"></div>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label">Hora do Término</label>
-                        <p class="control horaFim">
-                            <input id="horaFim" name="horaFim" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaFim(this.value)" type="time">
-                            
-                        </p>
-                    </div>
-                    
-                    <div class="field">
-                        <label class="label">Orientação ao Estagiário</label>
-                        <p class="control">
-                            <label class="radio">
-                                <input type="radio" name="orientaEstagiario" value="Sim">
-                                Sim
-                                </label>
-                                <label class="radio">
-                                <input type="radio" name="orientaEstagiario" value="Não">
-                                Não
-                            </label>
-                        </p>
-                    </div>
-                    <div class="field">
-                        <label class="label">Nome do Estagiário</label>
-                        <p class="control">
-                            <input id="nomeEstagiario" name="nomeEstagiario" class="input" placeholder="Text input" type="text">
-                        </p>
-                    </div>
-                    <div class="field is-grouped">
-                        <p class="control">
-                            <button type="submit" class="button is-primary" onclick="validaCadastro()">Cadastrar Atividade</button>
-                        </p>
-                        <p class="control">
-                            <button class="button is-link" id="clear">Limpar Formulário</button>
-                        </p>
-                    <br>
-                </form>
-            </div>
-            <!-- Lista de Atividades -->
-            <div class="column">
-                <h1 class="title">Lista de Atividades</h1>
-                <hr>
-                <!--a class="button is-primary" onclick="retornaDataAtual()">Relatórios do Dia Atual</a>
-                <a class="button is-info">Relatórios do dia Anterior</a>
-                <a class="button is-warning">Listar todos os relatórios</a>
-                <a class="button is-danger">Apagar todos os relatórios</a>
-                <br /><br /-->
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th><abbr title="Played">Atividade</abbr></th>
-                            <th><abbr title="Won">Descrição</abbr></th>
-                            <th><abbr title="Drawn">Dia</abbr></th>
-                            <th><abbr title="Lost">Hora de início</abbr></th>
-                            <th><abbr title="Goals for">Hora de término</abbr></th>
-                            <th><abbr title="Goals against">Orientação de estagiário</abbr></th>
-                            <th><abbr title="Goal difference">Nome do estagiário</abbr></th>
-                            <th><abbr title="Editar"></abbr></th>
-                            <th><abbr title="Apagar"></abbr></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% if (data) { %>
-                            <%  for(var i=0; i < data.length; i++) {  %>
-                                <tr>
-                                    <td class="atividade"><%= data[i].atividade %></td>
-                                    <td class="descricao"><%= data[i].descricao %></td>
-                                    <td class="dia"><%= data[i].dia %></td>
-                                    <td class="horaInicio"><%= data[i].horaInicio %></td>
-                                    <td class="horaFim"><%= data[i].horaFim %></td>
-                                    <td class="orientaEstagiario"><%= data[i].orientaEstagiario %></td>
-                                    <td class="nomeEstagiario"><%= data[i].nomeEstagiario %></td>
-                                    <td>
-                                        <a href="/upRelatorio/<%= data[i]._id %>" class="button is-info is-active">
-                                            <i class="far fa-edit"></i>  
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="/rmRelatorio/<%= data[i]._id %>" class="button is-danger  is-active">
-                                            <i class="fas fa-trash-alt"></i> 
-                                        </a>
-                                    </td>
-                                </tr>
-                            <% console.log(data) }; %>   
-                        <% }; %>   
-                </table>
             </div>
         </div>
-    </div>    
+    </header>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title">Cadastro de Atividades</h1>
+                    <hr>    
+                    <form action="/newRelatorio" method="POST">
+                        <div class="field">
+                            <label class="label">Atividade</label>
+                            <p class="control">
+                                <input id="atividade" name="atividade" class="input" placeholder="Qual atividade foi realizada?" type="text">
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Descrição</label>
+                            <p class="control">
+                                <textarea id="descricao" name="descricao" class="textarea" placeholder="Descreva a atividade" type="text"></textarea>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Data</label>
+                            <p class="control">
+                                <input id="data" name="data" class="input" placeholder="DD/MM/AAAA" type="date">
+                                <div class="invisivel mensagem notification is-danger"></div>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Hora de Início</label>
+                            <p class="control horaInicio">
+                                <input id="horaInicio" name="horaInicio" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaInicial(this.value)" type="time">
+                                <div class="invisivel mensagem notification is-danger"></div>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Hora do Término</label>
+                            <p class="control horaFim">
+                                <input id="horaFim" name="horaFim" class="input" placeholder="hh:mm" OnKeyUp="mascara_horaFim(this.value)" type="time">
+                                
+                            </p>
+                        </div>
+                        
+                        <div class="field">
+                            <label class="label">Orientação ao Estagiário</label>
+                            <p class="control">
+                                <label class="radio">
+                                    <input type="radio" name="orientaEstagiario" value="Sim">
+                                    Sim
+                                    </label>
+                                    <label class="radio">
+                                    <input type="radio" name="orientaEstagiario" value="Não">
+                                    Não
+                                </label>
+                            </p>
+                        </div>
+                        <div class="field">
+                            <label class="label">Nome à Estagiário</label>
+                            <div class="control">
+                                <label class="radio">
+                                    <input id="nomeEstagiario" type="radio" name="nomeEstagiario" value="Matheus">
+                                    Matheus
+                                </label>
+                                <label class="radio">
+                                    <input id="nomeEstagiario" type="radio" name="nomeEstagiario" value="Bruna">
+                                    Bruna
+                                </label>
+                                <label class="radio">
+                                    <input id="nomeEstagiario" type="radio" name="nomeEstagiario" value="Michael">
+                                    Michael
+                                </label>
+                            </div>
+                        </div>
+                        <div class="field is-grouped">
+                            <p class="control">
+                                <button type="submit" class="button is-primary" onclick="validaCadastro()">Cadastrar Atividade</button>
+                            </p>
+                            <p class="control">
+                                <button class="button is-link" id="clear">Limpar Formulário</button>
+                            </p>
+                        <br>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <!-- Lista de Atividades -->
+                <div class="column">
+                    <h1 class="title">Lista de Atividades</h1>
+                    <hr>
+                    <!--a class="button is-primary" onclick="retornaDataAtual()">Relatórios do Dia Atual</a>
+                    <a class="button is-info">Relatórios do dia Anterior</a>
+                    <a class="button is-warning">Listar todos os relatórios</a>
+                    <a class="button is-danger">Apagar todos os relatórios</a>
+                    <br /><br /-->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th><abbr title="Played">Atividade</abbr></th>
+                                <th><abbr title="Won">Descrição</abbr></th>
+                                <th><abbr title="Drawn">Dia</abbr></th>
+                                <th><abbr title="Lost">Hora de início</abbr></th>
+                                <th><abbr title="Goals for">Hora de término</abbr></th>
+                                <th><abbr title="Goals against">Conferir Atividade</abbr></th>
+                                <th><abbr title="Goal difference">Nome</abbr></th>
+                                <th><abbr title="Editar"></abbr></th>
+                                <th><abbr title="Apagar"></abbr></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% if (data) { %>
+                                <%  for(var i=0; i < data.length; i++) {  %>
+                                    <% //if (moment(data[i].dia).format('DD/MM/YYYY') == moment().format('DD/MM/YYYY')) { %>
+                                        <% console.log(`Eis a resposta: ${data}`) %>
+                                        <tr>
+                                            <td class="atividade"><%= data[i].atividade %></td>
+                                            <td class="descricao"><%= data[i].descricao %></td>
+                                            <td class="dia"><%= moment(data[i].dia).format('DD/MM/YYYY') %></td>
+                                            <td class="horaInicio"><%= data[i].horaInicio %></td>
+                                            <td class="horaFim"><%= data[i].horaFim %></td>
+                                            <td class="orientaEstagiario"><%= data[i].orientaEstagiario %></td>
+                                            <td class="nomeEstagiario"><%= data[i].nomeEstagiario %></td>
+                                            <td>
+                                                <a href="/upRelatorio/<%= data[i]._id %>" class="button is-info is-active">
+                                                    <i class="far fa-edit"></i>  
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a hre  f="/rmRelatorio/<%= data[i]._id %>" class="button is-danger  is-active">
+                                                    <i class="fas fa-trash-alt"></i> 
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <% //}; %>  
+                                <% console.log(data) }; %>   
+                            <% }; %>   
+                    </table>
+                </div>
+            </div>
+        </div>    
+    </section>
     <script src="js/relatorios.js"></script>
 </body>
 </html>

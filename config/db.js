@@ -1,3 +1,8 @@
+/* 
+script de conexão com o mongodb no mlab
+mongo ds221609.mlab.com:21609/inpe_relatorios -u rodzan -p Seilad
+*/
+
 // Bring Mongoose into the app 
 var mongoose = require( 'mongoose' ); 
 

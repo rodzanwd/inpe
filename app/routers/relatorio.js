@@ -12,7 +12,7 @@ module.exports = (app) => {
     //Update
     app.get('/upRelatorio/:id', controller.listUpRelatorio);
     //Save updated relatorio
-    app.put('/updateRelatorio/:id', controller.updateRelatorios);
+    app.post('/updateRelatorio', controller.updateRelatorios);
     //Delete
     app.get('/rmRelatorio/:id', controller.deleteRelatorios);
 }
